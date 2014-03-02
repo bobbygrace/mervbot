@@ -23,12 +23,8 @@
 
     <!-- Add your site or application content here -->
     <div class="content">
-      <h1>Audio Fun</h1>
 
-      <p>
-        <input type="button" onclick="sample.toggle();" value="Play/Pause">
-        Bass Drum <input type="range" min="0" max="100" value="100" onchange="sample.crossfade(this);"> Hi-Hat
-      </p>
+      <canvas height="640" width="480">
 
     </div>
 
@@ -36,7 +32,7 @@
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-2.1.0.min.js"><\/script>')</script>
     <script src="js/plugins.js"></script>
     <script src="js/webaudiohelpers.js"></script>
-    <script src="js/crossfade.js"></script>
+    <script src="js/input.js"></script>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
