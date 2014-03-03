@@ -1,8 +1,10 @@
 function MicrophoneSample() {
-  this.WIDTH = 640;
-  this.HEIGHT = 480;
   this.getMicrophoneInput();
-  this.canvas = document.querySelector('canvas');
+  this.fps = 30;
+  this.frameCount = 0;
+  this.mouth = document.getElementsByClassName('glyph-mouth');
+  this.eyes = document.getElementsByClassName('glyph-eye');
+  this.hands = document.getElementsByClassName('glyph-hand');
 }
 
 MicrophoneSample.prototype.getMicrophoneInput = function() {
@@ -14,9 +16,9 @@ MicrophoneSample.prototype.getMicrophoneInput = function() {
 MicrophoneSample.prototype.onStream = function(stream) {
   var input = context.createMediaStreamSource(stream);
   var filter = context.createBiquadFilter();
-  filter.frequency.value = 60.0;
+  filter.frequency.value = 120.0;
   filter.type = filter.NOTCH;
-  filter.Q = 10.0;
+  filter.Q = 30.0;
 
   var analyser = context.createAnalyser();
 
@@ -25,31 +27,104 @@ MicrophoneSample.prototype.onStream = function(stream) {
   filter.connect(analyser);
 
   this.analyser = analyser;
+
   // Setup a timer to visualize some stuff.
   requestAnimFrame(this.visualize.bind(this));
+
 };
 
 MicrophoneSample.prototype.onStreamError = function(e) {
   console.error('Error getting microphone', e);
 };
 
-MicrophoneSample.prototype.visualize = function() {
-  this.canvas.width = this.WIDTH;
-  this.canvas.height = this.HEIGHT;
-  var drawContext = this.canvas.getContext('2d');
+MicrophoneSample.prototype.emoticonHandMap = [
+  "☜",
+  "☞",
+  "☝",
+  "☟",
+  "✌",
+  "ლ"
+]
 
-  var times = new Uint8Array(this.analyser.frequencyBinCount);
-  this.analyser.getByteTimeDomainData(times);
-  for (var i = 0; i < times.length; i++) {
-    var value = times[i];
+MicrophoneSample.prototype.emoticonEyeMap = [
+  "‘",
+  "^",
+  "⌒",
+  "❯",
+  "ゥ",
+  "ᚚ",
+  "ᚗ",
+  "(",
+  "⚈",
+  "❤",
+  "♷"
+]
+
+MicrophoneSample.prototype.emoticonMouthMap = [
+  "‿",
+  "﹏ु",
+  "ᚂ",
+  "☋",
+  "☄",
+  "つ",
+  "…",
+  "ᴥ"
+]
+
+MicrophoneSample.prototype.applyGlyph = function(elems, map, avg) {
+  var rand = Math.random();
+
+  length = map.length;
+  idx = Math.floor( avg * length )
+  glyph = map[idx];
+
+  for (var i = 0; i < elems.length; i++) {
+    elems[i].textContent = glyph;
+  };
+
+};
+
+MicrophoneSample.prototype.visualize = function() {
+  var freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
+  this.analyser.getByteFrequencyData(freqByteData);
+
+  var third = Math.floor( freqByteData.length / 3 )
+
+  var handAvg = 0;
+  var eyeAvg = 0;
+  var mouthAvg = 0;
+
+  addToSum = function(idx) {
+    var value = freqByteData[idx];
     var percent = value / 256;
-    var height = this.HEIGHT * percent;
-    var offset = this.HEIGHT - height - 1;
-    var barWidth = this.WIDTH/times.length;
-    drawContext.fillStyle = 'black';
-    drawContext.fillRect(i * barWidth, offset, 1, 1);
+    return percent;
+  };
+
+  for (var i = 0; i < third; i++) {
+    handAvg = handAvg + addToSum(i + third);
+    eyeAvg = eyeAvg + addToSum(i);
+    mouthAvg = mouthAvg + addToSum((third * 2) + i);
+  };
+
+  handAvg = (handAvg / third);
+  eyeAvg = (eyeAvg / third);
+  mouthAvg = (mouthAvg / third);
+
+  this.frameCount++;
+
+  // only paint at our determined fps.
+  // we'll count frames in ms. when it's greater
+  // than the allotted time, then paint.
+
+  if ( ( this.frameCount * 16.6667 ) > ( 1000 / this.fps ) ) {
+    this.applyGlyph(this.hands, this.emoticonHandMap, handAvg);
+    this.applyGlyph(this.eyes, this.emoticonEyeMap, eyeAvg);
+    this.applyGlyph(this.mouth, this.emoticonMouthMap, mouthAvg);
+    this.frameCount = 0;
   }
+
   requestAnimFrame(this.visualize.bind(this));
+  
 };
 
 var sample = new MicrophoneSample();

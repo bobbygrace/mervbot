@@ -97,16 +97,52 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.content {
-  margin: 0 auto;
-  max-width: 900px;
+body {
+  font-family: monospace;
+  background: hsl(272, 80%, 80%);
+  color: hsla(272, 0%, 0%, 0.75);
 }
 
+.glyphs {
+  height: 200px;
+  margin: 15% auto;
+  padding: 10%;
+  text-align: center;
+  max-width: 200px;
+}
 
+  .glyph {
+    position: absolute;
+    top: 15%;
+    font-size: 200px;
+    height: 200px;
+    width: 200px;
+  }
 
+    .glyph-hand-left {
+      -webkit-transform: translateX(-200%) translateY(25%);
+      transform: translateX(-200%) translateY(25%);
+    }
 
+    .glyph-eye-left {
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
 
+    .glyph-mouth {
+      -webkit-transform: translateX(0%) translateY(50%);
+      transform: translateX(0%) translateY(50%);
+    }
 
+    .glyph-eye-right {
+      -webkit-transform: translateX(100%);
+      transform: translateX(100%);
+    }
+
+    .glyph-hand-right {
+      -webkit-transform: translateX(200%) translateY(25%);
+      transform: translateX(200%) translateY(25%);
+    }
 
 
 
