@@ -106,22 +106,17 @@ body {
 .glyphs {
   margin: 0 auto;
   text-align: center;
-  width: 60px;
+  width: 100px;
 }
 
   .glyph {
-    font-size: 60px;
-    height: 60px;
-    line-height: 60px;
+    font-size: 100px;
+    height: 100px;
+    line-height: 100px;
     position: absolute;
-    top: 25%;
-    width: 60px;
+    top: 15%;
+    width: 100px;
   }
-
-    .glyph-hand-left {
-      -webkit-transform: translateX(-200%) translateY(25%);
-      transform: translateX(-200%) translateY(25%);
-    }
 
     .glyph-eye-left {
       -webkit-transform: translateX(-100%);
@@ -137,17 +132,6 @@ body {
       -webkit-transform: translateX(100%);
       transform: translateX(100%);
     }
-
-    .glyph-hand-right {
-      -webkit-transform: translateX(200%) translateY(25%);
-      transform: translateX(200%) translateY(25%);
-    }
-
-
-
-
-
-
 
 
 
@@ -262,14 +246,14 @@ body {
 @media only screen and (min-width: 800px) {
 
   .glyphs {
-    width: 160px;
+    width: 250px;
   }
 
     .glyph {
-      height: 160px;
-      font-size: 160px;
-      line-height: 160px;
-      width: 160px;
+      height: 250px;
+      font-size: 250px;
+      line-height: 250px;
+      width: 250px;
     }
 
 }
@@ -277,14 +261,14 @@ body {
 @media only screen and (min-width: 1000px) {
 
   .glyphs {
-    width: 200px;
+    width: 300px;
   }
 
     .glyph {
-      height: 200px;
-      font-size: 200px;
-      line-height: 200px;
-      width: 200px;
+      height: 300px;
+      font-size: 300px;
+      line-height: 300px;
+      width: 300px;
     }
 
 }

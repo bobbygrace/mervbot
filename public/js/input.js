@@ -4,7 +4,6 @@ function MicrophoneSample() {
   this.frameCount = 0;
   this.mouth = document.getElementsByClassName('glyph-mouth');
   this.eyes = document.getElementsByClassName('glyph-eye');
-  this.hands = document.getElementsByClassName('glyph-hand');
 }
 
 MicrophoneSample.prototype.getMicrophoneInput = function() {
@@ -36,15 +35,6 @@ MicrophoneSample.prototype.onStream = function(stream) {
 MicrophoneSample.prototype.onStreamError = function(e) {
   console.error('Error getting microphone', e);
 };
-
-MicrophoneSample.prototype.emoticonHandMap = [
-  "☜",
-  "☞",
-  "☝",
-  "☟",
-  "✌",
-  "ლ"
-]
 
 MicrophoneSample.prototype.emoticonEyeMap = [
   "‘",
@@ -87,9 +77,8 @@ MicrophoneSample.prototype.visualize = function() {
   var freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
   this.analyser.getByteFrequencyData(freqByteData);
 
-  var third = Math.floor( freqByteData.length / 3 )
+  var half = Math.floor( freqByteData.length / 2 )
 
-  var handAvg = 0;
   var eyeAvg = 0;
   var mouthAvg = 0;
 
@@ -99,15 +88,13 @@ MicrophoneSample.prototype.visualize = function() {
     return percent;
   };
 
-  for (var i = 0; i < third; i++) {
-    handAvg = handAvg + addToSum(i + third);
+  for (var i = 0; i < half; i++) {
     eyeAvg = eyeAvg + addToSum(i);
-    mouthAvg = mouthAvg + addToSum((third * 2) + i);
+    mouthAvg = mouthAvg + addToSum(i + half);
   };
 
-  handAvg = (handAvg / third);
-  eyeAvg = (eyeAvg / third);
-  mouthAvg = (mouthAvg / third);
+  eyeAvg = (eyeAvg / half);
+  mouthAvg = (mouthAvg / half);
 
   this.frameCount++;
 
@@ -116,7 +103,6 @@ MicrophoneSample.prototype.visualize = function() {
   // than the allotted time, then paint.
 
   if ( ( this.frameCount * 16.6667 ) > ( 1000 / this.fps ) ) {
-    this.applyGlyph(this.hands, this.emoticonHandMap, handAvg);
     this.applyGlyph(this.eyes, this.emoticonEyeMap, eyeAvg);
     this.applyGlyph(this.mouth, this.emoticonMouthMap, mouthAvg);
     this.frameCount = 0;
