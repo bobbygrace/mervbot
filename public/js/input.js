@@ -1,6 +1,6 @@
 function MicrophoneSample() {
   this.getMicrophoneInput();
-  this.fps = 30;
+  this.fps = 8;
   this.frameCount = 0;
   this.mouth = document.getElementsByClassName('glyph-mouth');
   this.eyes = document.getElementsByClassName('glyph-eye');
