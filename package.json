@@ -1,6 +1,6 @@
 {
   "name": "mervbot",
-  "description": "Use your microphone to make an emoticon face dance, all in your browser! Huzzah!",
+  "description": "Watch as your browser turns into a emoticon face that responds to the sounds around you. Huzzah!",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
