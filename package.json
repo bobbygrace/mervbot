@@ -1,0 +1,9 @@
+{
+  "name": "mervbot",
+  "description": "Use your microphone to make an emoticon face dance, all in your browser! Huzzah!",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "*"
+  }
+}
