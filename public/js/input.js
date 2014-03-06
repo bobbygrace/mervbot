@@ -77,7 +77,8 @@ MicrophoneSample.prototype.visualize = function() {
   var freqByteData = new Uint8Array(this.analyser.frequencyBinCount);
   this.analyser.getByteFrequencyData(freqByteData);
 
-  var half = Math.floor( freqByteData.length / 2 )
+  var divisions = 2
+  var div = Math.floor( freqByteData.length / divisions )
 
   var eyeAvg = 0;
   var mouthAvg = 0;
@@ -88,13 +89,13 @@ MicrophoneSample.prototype.visualize = function() {
     return percent;
   };
 
-  for (var i = 0; i < half; i++) {
+  for (var i = 0; i < div; i++) {
     eyeAvg = eyeAvg + addToSum(i);
-    mouthAvg = mouthAvg + addToSum(i + half);
+    mouthAvg = mouthAvg + addToSum(i + div);
   };
 
-  eyeAvg = (eyeAvg / half);
-  mouthAvg = (mouthAvg / half);
+  eyeAvg = (eyeAvg / div);
+  mouthAvg = (mouthAvg / div);
 
   this.frameCount++;
 
