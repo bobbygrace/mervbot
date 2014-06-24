@@ -1,4 +1,6 @@
-Watch as your browser turns into a emoticon face that responds to the sounds around you. Huzzah!
+![mervbot](https://dl.dropboxusercontent.com/u/379970/mervbot.gif)
+
+Turn your boring browser into a emoticon face that responds to the sounds around you. Huzzah!
 
 To get started:
 
