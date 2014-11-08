@@ -1,3 +1,8 @@
+navigator.getUserMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+
 function MicrophoneSample() {
   this.getMicrophoneInput();
   this.fps = 15;
@@ -7,9 +12,9 @@ function MicrophoneSample() {
 }
 
 MicrophoneSample.prototype.getMicrophoneInput = function() {
-  navigator.webkitGetUserMedia({audio: true},
-                               this.onStream.bind(this),
-                               this.onStreamError.bind(this));
+  navigator.getUserMedia({audio: true},
+                         this.onStream.bind(this),
+                         this.onStreamError.bind(this));
 };
 
 MicrophoneSample.prototype.onStream = function(stream) {
